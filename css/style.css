@@ -8,6 +8,8 @@ img {vertical-align: middle;}
   max-width: 1000px;
   position: relative;
   margin: auto;
+  background: #646464;
+  height: 510px;
 }
 
 /* Next & previous buttons */
@@ -78,7 +80,13 @@ img {vertical-align: middle;}
   animation-name: fade;
   animation-duration: 1.5s;
 }
+.fade:nth-child(n+1){
+  background-color:#b33; 
+}
 
+.fade:nth-child(n+2){
+  background-color:#003; 
+}
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
