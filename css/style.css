@@ -98,8 +98,8 @@ img {vertical-align: middle;}
   background-color:#331100d6; 
     clip-path: polygon(99.11% 2.45%, 96.11% 89.73%, 0.28% 100.21%, 1.1% 3.89%);
 }
-.fade{
-  transition: 1s? 
+.fade {
+  transition: clip-path 2s ease-in-out;
 }
 @keyframes fade {
   from {opacity: .4;} 
