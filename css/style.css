@@ -1,15 +1,15 @@
-* {box-sizing: border-box}
+* {box-sizing: border-box;}
 body {font-family: Verdana, sans-serif; margin:0}
-.mySlides {display: none}
+.mySlides {display: none; height: 50vh;}
 img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  width: 60vw;
+  width: 70vw;
   position: relative;
   margin: auto;
   background: #646464;
-  height: 40vh;
+  height: 50vh;
 }
 
 /* Next & previous buttons */
@@ -80,16 +80,19 @@ img {vertical-align: middle;}
   animation-name: fade;
   animation-duration: 1.5s;
 }
-.fade:nth-child(n+1){
+.fade:nth-child(1){
   background-color:#b33; 
 }
 
-.fade:nth-child(n+2){
+.fade:nth-child(2){
+  background-color:#003; 
+}
+.fade:nth-child(3){
   background-color:#003; 
 }
 @keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+  from {opacity: .4;} 
+  to {opacity: 1;}
 }
 
 /* On smaller screens, decrease text size */
