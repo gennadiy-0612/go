@@ -1,6 +1,6 @@
 * {box-sizing: border-box;}
 body {font-family: Verdana, sans-serif; margin:0;display: flex;flex-direction: column;height: 100vh;}
-.mySlides {display: none; height: 50vh;}
+.mySlides {/*! display: none; */ height: 50vh;}
 img {vertical-align: middle;}
 
 /* Slideshow container */
@@ -100,6 +100,13 @@ img {vertical-align: middle;}
 }
 .fade {
   transition: clip-path 2s ease-in-out;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+.actSlide{
+  background-color: #000000 !important;;
+  display: block;
 }
 @keyframes fade {
   from {opacity: .4;} 
