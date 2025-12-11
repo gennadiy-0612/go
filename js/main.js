@@ -1,31 +1,21 @@
-let slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+let slider = new Object();
+class slide {
+    /**
+     * @param {string} nameNODE - Ім'я елемента 
+     */
+    constructor(nameNODE) {
+        this.nameNODE = nameNODE;
+        this.elem = document.querySelectorAll(this.nameNODE)[2];
+    }
+        adding(){
+        // this.elem.addEventListener('click', show);
+        console.log(this.elem);
+        console.log(this);
+    }
 }
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].classList.remove("actSlide");
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].classList.add("actSlide");  
-  dots[slideIndex-1].className += " active";
-}
-document.addEventListener('DOMContentLoaded', function() {
-    // Code to run after the DOM is ready
-    console.log('DOM fully loaded and parsed');
-    // You can safely access and manipulate DOM elements here
-});
+slider.letWork = new slide('fade');
+slider.allTogether = function(){
+  slider.letWork.adding();
+};
+ 
+document.addEventListener('DOMContentLoaded', slider.letWork.allTogether);

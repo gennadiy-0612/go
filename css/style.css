@@ -4,11 +4,12 @@ body {font-family: Verdana, sans-serif; margin:0;display: flex;flex-direction: c
 img {vertical-align: middle;}
 
 /* Slideshow container */
+
 .slideshow-container {
   width: 70vw;
   position: relative;
   margin: auto;
-  /*! background: #646464; */
+  background: #d7d7d7;
   height: 50vh;
 }
 .dots {
