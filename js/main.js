@@ -24,3 +24,8 @@ function showSlides(n) {
   slides[slideIndex-1].classList.add("actSlide");  
   dots[slideIndex-1].className += " active";
 }
+document.addEventListener('DOMContentLoaded', function() {
+    // Code to run after the DOM is ready
+    console.log('DOM fully loaded and parsed');
+    // You can safely access and manipulate DOM elements here
+});
