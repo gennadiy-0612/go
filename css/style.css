@@ -105,7 +105,6 @@ img {vertical-align: middle;}
   display: none;
 }
 .actSlide{
-  background-color: #000000 !important;;
   display: block;
 }
 @keyframes fade {
