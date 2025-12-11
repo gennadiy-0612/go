@@ -5,11 +5,11 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  width: 60vw;
   position: relative;
   margin: auto;
   background: #646464;
-  height: 510px;
+  height: 40vh;
 }
 
 /* Next & previous buttons */
@@ -80,14 +80,11 @@ img {vertical-align: middle;}
   animation-name: fade;
   animation-duration: 1.5s;
 }
-.fade:nth-child(1){
+.fade:nth-child(n+1){
   background-color:#b33; 
 }
 
-.fade:nth-child(2){
-  background-color:#003; 
-}
-.fade:nth-child(3){
+.fade:nth-child(n+2){
   background-color:#003; 
 }
 @keyframes fade {
