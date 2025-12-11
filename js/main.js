@@ -1,21 +1,94 @@
-let slider = new Object();
-class slide {
+/**
+ * Клас SliderElement
+ * Відповідає за ініціалізацію та поведінку одного елемента слайдера.
+ */
+class SliderElement {
     /**
-     * @param {string} nameNODE - Ім'я елемента 
+     * @param {string} selector - CSS-селектор елемента (наприклад, '.fade').
+     * @param {number} index - Індекс елемента в NodeList, який потрібно обрати (наприклад, 2).
      */
-    constructor(nameNODE) {
-        this.nameNODE = nameNODE;
-        this.elem = document.querySelectorAll(this.nameNODE)[2];
+    constructor(selector, index = 0) {
+        this.selector = selector;
+        this.index = index;
+        this.element = this._findElement(); // Зберігаємо DOM-елемент тут
+        
+        // Якщо елемент не знайдено, ми не можемо продовжувати
+        if (!this.element) {
+            console.error(`Елемент з селектором '${selector}' та індексом ${index} не знайдено.`);
+            // У цьому випадку this.element буде null
+        }
     }
-        adding(){
-        // this.elem.addEventListener('click', show);
-        console.log(this.elem);
-        console.log(this);
+
+    /**
+     * Приватний допоміжний метод для знаходження DOM-елемента.
+     * @returns {HTMLElement | null} Знайдений елемент або null.
+     */
+    _findElement() {
+        // Знаходимо всі елементи, що відповідають селектору
+        const allElements = document.querySelectorAll(this.selector);
+        
+        // Повертаємо елемент за вказаним індексом або null
+        return allElements[this.index] || null; 
+    }
+
+    /**
+     * Публічний метод для додавання обробників подій.
+     * Тут ми також додаємо логіку обробника кліку.
+     */
+    addEvents() {
+        // Перевіряємо, чи існує елемент
+        if (this.element) {
+            
+            // 💡 Використовуємо bind(this), щоб метод handleClick завжди мав доступ до this об'єкта SliderElement.
+            this.element.addEventListener('click', this.handleClick.bind(this));
+            
+            console.log("Обробник кліку додано.");
+            console.log("Елемент, до якого додано обробник:", this.element);
+        } else {
+             console.warn("Неможливо додати обробник, елемент не знайдено.");
+        }
+    }
+    
+    /**
+     * Метод, який виконується при кліку.
+     * @param {Event} event - Об'єкт події.
+     */
+    handleClick(event) {
+        console.log(`Клік спрацював на елементі: ${this.selector}[${this.index}]`);
+        console.log(`Подія відбулася на:`, event.currentTarget);
+        // Тут може бути ваша логіка слайдера
     }
 }
-slider.letWork = new slide('fade');
-slider.allTogether = function(){
-  slider.letWork.adding();
+
+
+/**
+ * Об'єкт App (Точка входу)
+ * Відповідає за ініціалізацію всієї програми.
+ */
+const App = {
+    // Властивість, де зберігатиметься наш екземпляр класу
+    sliderInstance: null,
+
+    /**
+     * Метод ініціалізації, який викликається після завантаження DOM.
+     */
+    init() {
+        console.log("DOM повністю завантажено. Ініціалізація...");
+        
+        // 1. Створення екземпляра класу
+        // Ми хочемо знайти елемент з класом '.fade' під індексом 0.
+        App.sliderInstancePrev = new SliderElement('.prev', 0); 
+        App.sliderInstanceNext = new SliderElement('.next', 0); 
+
+        // 2. Додавання обробників подій (викликаємо метод класу)
+        if (App.sliderInstancePrev.element && App.sliderInstanceNext.element) {
+            App.sliderInstancePrev.addEvents();
+            App.sliderInstanceNext.addEvents();
+        }
+    }
 };
- 
-document.addEventListener('DOMContentLoaded', slider.letWork.allTogether);
+
+
+// Головна інструкція для запуску: 
+// Прив'язуємо метод App.init до події повного завантаження документа.
+document.addEventListener('DOMContentLoaded', App.init);
