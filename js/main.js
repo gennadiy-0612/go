@@ -18,7 +18,6 @@ function showSlides(n) {
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
     slides[i].classList.remove("actSlide");
-    slides[i].classList.add("noActSlide");
   }
   for (i = 0; i < dots.length; i++) {
     dots[i].className = dots[i].className.replace(" active", "");
