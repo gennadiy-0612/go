@@ -8,7 +8,7 @@ img {vertical-align: middle;}
   width: 70vw;
   position: relative;
   margin: auto;
-  background: #646464;
+  /*! background: #646464; */
   height: 50vh;
 }
 .dots {
@@ -96,6 +96,10 @@ img {vertical-align: middle;}
 }
 .fade:nth-child(3){
   background-color:#331100d6; 
+    clip-path: polygon(99.11% 2.45%, 96.11% 89.73%, 0.28% 100.21%, 1.1% 3.89%);
+}
+.fade{
+  transition: 1s? 
 }
 @keyframes fade {
   from {opacity: .4;} 
