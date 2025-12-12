@@ -79,6 +79,10 @@ const App = {
         // Ми хочемо знайти елемент з класом '.fade' під індексом 0.
         App.sliderInstancePrev = new SliderElement('.prev', 0); 
         App.sliderInstanceNext = new SliderElement('.next', 0); 
+        
+        for(i=0; i<10; i++){
+            console.log(i);
+        }
 
         // 2. Додавання обробників подій (викликаємо метод класу)
         if (App.sliderInstancePrev.element && App.sliderInstanceNext.element) {
