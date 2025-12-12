@@ -1,39 +1,48 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css"> 
+<html lang="uk"> <head>
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приклад Семантичного Слайдера</title> <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
 
-<div class="slideshow-container">
+<section class="slideshow-container" aria-label="Слайд-шоу">
+    
+    <div class="fade" role="group" aria-label="Слайд 1 з 3">
+        <p class="numbertext">1 / 3</p>
+        <figure class="underNote"> 
+            <figcaption class="text">Заголовок 1. Caption Text</figcaption> 
+        </figure>
+    </div>
 
-<div class="mySlides fade">
-  <div class="numbertext">1 / 3</div>
-  <div class="text">Caption Text</div>
-</div>
+    <div class="fade" role="group" aria-label="Слайд 2 з 3">
+        <p class="numbertext">2 / 3</p>
+        <figure class="underNote">
+            <figcaption class="text">Заголовок 2. Caption Two</figcaption>
+        </figure>
+    </div>
 
-<div class="mySlides fade">
-  <div class="numbertext">2 / 3</div>
-  <div class="text">Caption Two</div>
-</div>
+    <div class="fade" role="group" aria-label="Слайд 3 з 3">
+        <p class="numbertext">3 / 3</p>
+        <figure class="underNote">
+            <figcaption class="text">Заголовок 3. Caption Three</figcaption>
+        </figure>
+    </div>
 
-<div class="mySlides fade">
-  <div class="numbertext">3 / 3</div>
-  <div class="text">Caption Three</div>
-</div>
+    <button class="prev" aria-label="Попередній слайд">
+        <span aria-hidden="true">&lt;</span>
+    </button>
+    <button class="next" aria-label="Наступний слайд">
+        <span aria-hidden="true">&gt;</span>
+    </button>
 
-<a class="prev"><</a>
-<a class="next">></a>
+</section>
 
-</div>
-<br>
+<nav class="dots" aria-label="Індикатори слайдів">
+    <button class="dot" aria-label="Перейти до слайда 1"></button> 
+    <button class="dot" aria-label="Перейти до слайда 2"></button> 
+    <button class="dot" aria-label="Перейти до слайда 3"></button> 
+</nav>
 
-<div class="dots">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-</div>
 <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

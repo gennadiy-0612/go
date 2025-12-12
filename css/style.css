@@ -16,7 +16,7 @@ img {
 /* ======================== 2. Контейнер та Слайди ======================= */
 .slideshow-container {
     position: relative;
-    width: 70vw;
+    width: 40vw;
     height: 50vh;
     margin: auto;
     background: #d7d7d7;
@@ -30,29 +30,53 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
 
     /* 🚨 Ключовий момент: Використовуємо transform для прискорення анімації та приховування */
     opacity: 0;
-    visibility: hidden;
-    z-index: 1; /* Базовий рівень */
 
     /* Анімація переходу */
     transition: 
-        opacity 1.5s ease-in-out,
-        visibility 1.5s ease-in-out,
-        clip-path 2s ease-in-out; 
-    
-    /* Скасовуємо оригінальний display: none, який заважав transition */
-    display: block; 
+        opacity 1.5s ease-in-out, visibility 1.5s ease-in-out, clip-path 2s ease-in-out; 
+}
+.fade:after{
+        content: '';
+        display: block;
+        width: 50vw;
+        height: 20vh;
+        background-color: #0000002b;
+        position: absolute;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: 0;
+        clip-path: polygon(5.17% 9.28%, 98.45% 5.50%, 99.41% 86.13%, 0.82% 97.47%);
 }
 
+.act1::after{clip-path: polygon(5.17% 9.28%, 98.45% 5.50%, 99.41% 86.13%, 5.82% 97.47%);}
+.act2::after{clip-path: polygon(7.17% 9.28%, 98.45% 5.50%, 99.41% 86.13%, 1.82% 97.47%);}
+.act3::after{clip-path: polygon(1.17% 9.28%, 98.45% 5.50%, 99.41% 86.13%, 7.82% 97.47%);}
+
 /* 2.2 Активний Слайд (керований JS) */
-.fade.active {
+.active {
     opacity: 1;
-    visibility: visible;
     z-index: 2; /* Активний слайд поверх неактивних */
 }
 
+.active:after{
+    
+}
+
+.underNote{
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: 0;
+    align-self: center;
+}
 /* ======================== 3. Специфічні Слайди (Clip-Path) ================= */
 .fade:nth-child(1) {
     background-color: #b33;
@@ -79,6 +103,7 @@ img {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     cursor: pointer;
+    border-radius: 15px;
     z-index: 20;
     border: none;
     transition: background-color 0.3s; /* Додаємо перехід для :hover */
@@ -120,27 +145,49 @@ img {
 
 
 /* ======================== 5. Додаткові Текстові Елементи =================== */
-.text {
-    color: #f2f2f2;
-    font-size: 15px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-}
 
 .numbertext {
     color: #f2f2f2;
     font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
+    padding: 0;
+    width: fit-content;
+    background-color: #000000;
+    align-self: center;
 }
 
 /* ======================== 6. Медіа Запити ============================== */
 @media only screen and (max-width: 300px) {
-    .prev, .next, .text {
+    .prev, .next {
         font-size: 11px
     }
 }
+
+/* =========================== 3D ЕФЕКТИ ТА ОБ'ЄМ =========================== */
+
+/* 3. Об'єм та тінь (Text Shadow) */
+.text {
+    /* 1. Доступність: Високий контраст */
+    color: #FFFFFF; /* Чистий білий колір */
+    background-color: transparent; /* Переконаємося, що немає фону, якщо це не потрібно */
+
+    /* 2. Читабельність: Розмір та жирність */
+    font-size: 1.5rem; /* Приблизно 24px, збільшуємо для кращої читабельності */
+    font-weight: 700; /* Робимо текст жирним */
+    text-transform: uppercase; /* Додаємо візуальний акцент */
+}
+
+/* 4. Декоративний 3D Ефект (За бажанням: псевдоелемент) */
+/* Це створює "вторинний" шар тексту під основним */
+.text::after {
+    content: attr(data-text); /* Використовуємо атрибут для тексту */
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: -1; /* Поміщаємо під основний текст */
+    color: #4CAF50; /* Наприклад, яскраво-зелений колір */
+    /* Ви можете додати transform: rotate(-1deg); для ефекту невеликого зсуву */
+}
+
+/* 5. Додавання атрибута data-text до HTML-елемента */
+/* Щоб цей ефект 4 працював, вам потрібно додати атрибут data-text до вашого HTML: */
+/* <figcaption class="text" data-text="Заголовок 1. Caption Text">Заголовок 1. Caption Text</figcaption> */

@@ -46,11 +46,10 @@ const SliderManager = {
     slideSelector: '.fade',
 
     /**
-     * 💡 МЕТОД, ЯКИЙ БУВ ВІДСУТНІЙ: initializeSlides()
-     * Знаходить всі слайди, зберігає їх і встановлює початковий активний клас.
+     * Знаходить всі слайди та встановлює початковий активний клас.
+     * @param {number} [initialIndex=0] - Початковий індекс слайда.
      */
-    initializeSlides() {
-        // Знаходимо всі елементи з класом '.fade'
+    initializeSlides(initialIndex = 0) {
         this.slideElements = document.querySelectorAll(this.slideSelector);
 
         if (this.slideElements.length === 0) {
@@ -58,9 +57,29 @@ const SliderManager = {
             return;
         }
 
-        // Встановлюємо перший слайд як активний
+        const totalSlides = this.slideElements.length;
+        // Гарантуємо, що початковий індекс знаходиться в межах [0, totalSlides - 1]
+        const validIndex = (initialIndex % totalSlides + totalSlides) % totalSlides;
+
+        this.setCurrentSlide(validIndex);
+    },
+
+    /**
+     * Встановлює поточний слайд, оновлюючи класи 'active'.
+     * @param {number} newIndex - Індекс слайда, який потрібно встановити як поточний.
+     */
+    setCurrentSlide(newIndex) {
+        // 1. Видаляємо клас 'active' з поточного слайда, якщо він існує
+        if (this.slideElements[this.currentSlideIndex]) {
+            this.slideElements[this.currentSlideIndex].classList.remove('active');
+        }
+
+        // 2. Встановлюємо новий індекс
+        this.currentSlideIndex = newIndex;
+
+        // 3. Додаємо клас 'active' до нового слайда
         this.slideElements[this.currentSlideIndex].classList.add('active');
-        console.log(`Знайдено ${this.slideElements.length} слайдів. Перший слайд активовано.`);
+        console.log(`Слайд активовано: №${newIndex}`);
     },
 
     /**
@@ -68,24 +87,17 @@ const SliderManager = {
      */
     addSlideClickHandlers() {
         this.slideElements.forEach((element, index) => {
-            // Прив'язуємо обробник до кожного слайда
             element.addEventListener('click', () => this.handleSlideClick(index));
         });
         console.log("Обробники кліку додано до всіх слайдів.");
     },
 
-    /**
-     * Обробляє клік на самому слайді.
-     * @param {number} index - Індекс слайда, на який клікнули.
-     */
     handleSlideClick(index) {
-        console.log(`Клік на слайді з індексом: ${index}. Переходимо.`);
         this.goToSlide(index);
     },
 
     /**
      * Обробляє клік на кнопках навігації (.prev або .next).
-     * @param {string} directionSelector - Селектор, який вказує напрямок.
      */
     handleNavigation(directionSelector) {
         let newIndex = this.currentSlideIndex;
@@ -94,10 +106,9 @@ const SliderManager = {
         if (totalSlides === 0) return;
 
         if (directionSelector === '.next') {
-            // Перехід до наступного слайда (циклічно)
             newIndex = (this.currentSlideIndex + 1) % totalSlides;
         } else if (directionSelector === '.prev') {
-            // Перехід до попереднього слайда (циклічно)
+            // Формула для коректного циклічного переходу назад
             newIndex = (this.currentSlideIndex - 1 + totalSlides) % totalSlides;
         }
 
@@ -106,23 +117,34 @@ const SliderManager = {
 
     /**
      * Перемикає відображення слайдів, оновлюючи класи 'active'.
-     * @param {number} newIndex - Індекс слайда, який потрібно показати.
      */
     goToSlide(newIndex) {
         if (newIndex < 0 || newIndex >= this.slideElements.length) {
             console.warn("Неможливо перейти до цього слайда. Індекс поза межами.");
             return;
         }
+        this.setCurrentSlide(newIndex);
+    }
+};
 
-        // 1. Видаляємо клас 'active' з поточного слайда
-        this.slideElements[this.currentSlideIndex].classList.remove('active');
 
-        // 2. Встановлюємо новий індекс
-        this.currentSlideIndex = newIndex;
+/**
+ * Об'єкт D (Тестування випадкових чисел)
+ * Використовується для встановлення випадкового стартового слайда.
+ */
+const D = {};
 
-        // 3. Додаємо клас 'active' до нового слайда
-        this.slideElements[this.currentSlideIndex].classList.add('active');
-        console.log(`Показано слайд №${this.currentSlideIndex}`);
+D.Random = {
+    one: 'act1',
+    two: 'act2',
+    three: 'act3',
+    result: 0,
+
+    random: function() {
+        // Генеруємо число від 1 до 3
+        const max = 3; 
+        this.result = Math.floor(Math.random() * max) + 1;
+        console.log(`Випадкове число (1-${max}), збережене в D.Random.result: ${this.result}`);
     }
 };
 
@@ -137,16 +159,21 @@ const App = {
     sliderManager: SliderManager,
 
     init() {
-        console.log("--- Ініціалізація програми ---");
+        console.log("--- Ініціалізація програми App ---");
 
-        // 1. 💡 ВИПРАВЛЕННЯ: Тепер initializeSlides() існує і виконується першим
-        App.sliderManager.initializeSlides();
+        // 1. Генеруємо випадкове число для старту
+        D.Random.random(); 
 
-        // 2. Створення екземплярів класу для кнопок управління
+        // 2. Встановлюємо початковий слайд, використовуючи випадкове число
+        // (Треба відняти 1, оскільки індекси починаються з 0, а число від 1)
+        const startIndex = D.Random.result - 1;
+        App.sliderManager.initializeSlides(startIndex);
+
+        // 3. Створення екземплярів класу для кнопок управління
         App.sliderInstancePrev = new SliderElement('.prev', 0);
         App.sliderInstanceNext = new SliderElement('.next', 0);
 
-        // 3. Додавання обробників подій до кнопок Prev/Next
+        // 4. Додавання обробників подій
         if (App.sliderInstancePrev.element) {
             App.sliderInstancePrev.addEvents();
         }
@@ -154,13 +181,13 @@ const App = {
             App.sliderInstanceNext.addEvents();
         }
 
-        // 4. Додавання обробників кліку до всіх слайдів (.fade)
+        // 5. Додавання обробників кліку до слайдів
         App.sliderManager.addSlideClickHandlers();
-
-        console.log("--- Ініціалізація завершена ---");
+        console.log("--- Ініціалізація App завершена ---");
     }
 };
 
 
-// Головна інструкція для запуску:
+// ========================= ГОЛОВНА ТОЧКА ВХОДУ =========================
+// Запускаємо App.init після повного завантаження DOM
 document.addEventListener('DOMContentLoaded', App.init);
